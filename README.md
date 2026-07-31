@@ -28,6 +28,16 @@ implementation plan this was built from.
   `MockProfileRepository` return hardcoded data behind the same `Result`-returning
   interfaces a real backend-backed implementation would use.
 
+## Known trade-offs
+
+- **Poppins is fetched over the network via `google_fonts`, not bundled** — on
+  first run the package downloads and caches the Poppins font files from
+  Google Fonts. `google_fonts` gracefully falls back to the platform default
+  font if the device is offline, so this never breaks the UI, just its exact
+  typography on a first offline run. Bundling the `.ttf` files as local assets
+  would remove this network dependency entirely; that wasn't done here to
+  avoid adding binary font assets to the repo in this sandboxed environment.
+
 ## Testing
 
 ```bash
