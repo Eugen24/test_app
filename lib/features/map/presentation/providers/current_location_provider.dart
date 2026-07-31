@@ -1,15 +1,23 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geolocator/geolocator.dart';
 import '../../../../core/utils/result.dart';
+import '../../data/geolocator_service.dart';
+import '../../domain/geolocation_service.dart';
+
+final geolocationServiceProvider = Provider<GeolocationService>((ref) {
+  return GeolocatorService();
+});
 
 class CurrentLocationController
     extends StateNotifier<AsyncValue<Result<Position, AppError>?>> {
-  CurrentLocationController() : super(const AsyncValue.data(null));
+  CurrentLocationController(this._service) : super(const AsyncValue.data(null));
+
+  final GeolocationService _service;
 
   Future<void> determine() async {
     state = const AsyncValue.loading();
     try {
-      final serviceEnabled = await Geolocator.isLocationServiceEnabled();
+      final serviceEnabled = await _service.isLocationServiceEnabled();
       if (!serviceEnabled) {
         state = const AsyncValue.data(
           Result<Position, AppError>.failure(AppError.locationServiceDisabled),
@@ -17,9 +25,9 @@ class CurrentLocationController
         return;
       }
 
-      var permission = await Geolocator.checkPermission();
+      var permission = await _service.checkPermission();
       if (permission == LocationPermission.denied) {
-        permission = await Geolocator.requestPermission();
+        permission = await _service.requestPermission();
       }
       if (permission == LocationPermission.denied ||
           permission == LocationPermission.deniedForever) {
@@ -29,7 +37,7 @@ class CurrentLocationController
         return;
       }
 
-      final position = await Geolocator.getCurrentPosition();
+      final position = await _service.getCurrentPosition();
       state = AsyncValue.data(Result<Position, AppError>.success(position));
     } catch (_) {
       state = const AsyncValue.data(
@@ -44,5 +52,5 @@ final currentLocationProvider =
       CurrentLocationController,
       AsyncValue<Result<Position, AppError>?>
     >((ref) {
-      return CurrentLocationController();
+      return CurrentLocationController(ref.watch(geolocationServiceProvider));
     });
