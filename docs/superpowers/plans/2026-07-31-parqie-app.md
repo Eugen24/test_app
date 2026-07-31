@@ -103,10 +103,10 @@ README.md
 - [ ] **Step 1: Create the Flutter project in place**
 
 ```bash
-flutter create --org com.parqie --project-name parqie_app .
+flutter create --org com.example --project-name test_app .
 ```
 
-Run this from the repo root (`/Users/neogenius24/Work1/apps-main/parqie_app`). It scaffolds `lib/main.dart`, platform folders (`ios/`, `android/`), `pubspec.yaml`, and `.gitignore` without clobbering the existing `docs/` and `.git/`.
+Run this from the repo root (`/Users/neogenius24/Work1/apps-main/test_app`). It scaffolds `lib/main.dart`, platform folders (`ios/`, `android/`), `pubspec.yaml`, and `.gitignore` without clobbering the existing `docs/` and `.git/`.
 
 - [ ] **Step 2: Add dependencies to `pubspec.yaml`**
 
@@ -166,7 +166,7 @@ git commit -m "chore: scaffold Flutter project with core dependencies"
 ```dart
 // test/core/utils/result_test.dart
 import 'package:flutter_test/flutter_test.dart';
-import 'package:parqie_app/core/utils/result.dart';
+import 'package:test_app/core/utils/result.dart';
 
 void main() {
   test('Success wraps a value and exposes it via isSuccess', () {
@@ -200,7 +200,7 @@ void main() {
 - [ ] **Step 2: Run test to verify it fails**
 
 Run: `flutter test test/core/utils/result_test.dart`
-Expected: FAIL — `package:parqie_app/core/utils/result.dart` not found.
+Expected: FAIL — `package:test_app/core/utils/result.dart` not found.
 
 - [ ] **Step 3: Implement `Result`**
 
@@ -385,7 +385,7 @@ git commit -m "feat: add Result type and app theme"
 // test/shared/widgets/shadow_card_test.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:parqie_app/shared/widgets/shadow_card.dart';
+import 'package:test_app/shared/widgets/shadow_card.dart';
 
 void main() {
   testWidgets('ShadowCard renders its child and responds to tap', (tester) async {
@@ -410,7 +410,7 @@ void main() {
 // test/shared/widgets/pill_button_test.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:parqie_app/shared/widgets/pill_button.dart';
+import 'package:test_app/shared/widgets/pill_button.dart';
 
 void main() {
   testWidgets('PillButton renders label and calls onPressed', (tester) async {
@@ -564,7 +564,7 @@ git commit -m "feat: add ShadowCard and PillButton shared widgets"
 ```dart
 // test/features/map/data/mock_location_repository_test.dart
 import 'package:flutter_test/flutter_test.dart';
-import 'package:parqie_app/features/map/data/mock_location_repository.dart';
+import 'package:test_app/features/map/data/mock_location_repository.dart';
 
 void main() {
   test('MockLocationRepository returns a non-empty successful list', () async {
@@ -718,7 +718,7 @@ git commit -m "feat: add LocationPin domain model and mock location repository"
 // test/features/map/presentation/location_providers_test.dart
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:parqie_app/features/map/presentation/providers/location_providers.dart';
+import 'package:test_app/features/map/presentation/providers/location_providers.dart';
 
 void main() {
   test('filteredLocationsProvider returns all locations when query is empty', () async {
@@ -961,7 +961,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
-import 'package:parqie_app/features/splash/presentation/splash_screen.dart';
+import 'package:test_app/features/splash/presentation/splash_screen.dart';
 
 void main() {
   testWidgets('SplashScreen shows the wordmark and navigates to /map after delay',
@@ -1148,7 +1148,7 @@ class MapScreen extends ConsumerWidget {
             children: [
               TileLayer(
                 urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-                userAgentPackageName: 'com.parqie.parqie_app',
+                userAgentPackageName: 'com.example.test_app',
               ),
               MarkerLayer(
                 markers: [
@@ -1267,8 +1267,8 @@ git commit -m "feat: render interactive map with animated custom markers"
 // test/features/map/presentation/widgets/location_card_test.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:parqie_app/features/map/domain/location_pin.dart';
-import 'package:parqie_app/features/map/presentation/widgets/location_card.dart';
+import 'package:test_app/features/map/domain/location_pin.dart';
+import 'package:test_app/features/map/presentation/widgets/location_card.dart';
 
 void main() {
   testWidgets('LocationCard shows name, description, and reports taps', (tester) async {
@@ -1306,7 +1306,7 @@ void main() {
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:parqie_app/features/map/presentation/widgets/bottom_panel.dart';
+import 'package:test_app/features/map/presentation/widgets/bottom_panel.dart';
 
 void main() {
   testWidgets('BottomPanel filters location cards as the user types', (tester) async {
@@ -1707,7 +1707,7 @@ git commit -m "feat: implement bottom panel with search, location cards, and cur
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:parqie_app/features/profile/presentation/profile_screen.dart';
+import 'package:test_app/features/profile/presentation/profile_screen.dart';
 
 void main() {
   testWidgets('ProfileScreen renders greeting and stat cards from mock data',
@@ -1936,7 +1936,7 @@ git commit -m "feat: implement profile screen with mocked stats"
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
-import 'package:parqie_app/main.dart';
+import 'package:test_app/main.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
