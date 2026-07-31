@@ -74,10 +74,7 @@ class _MapScreenState extends ConsumerState<MapScreen> {
       final wasNull = previous?.asData?.value?.valueOrNull == null;
       final position = next.asData?.value?.valueOrNull;
       if (wasNull && position != null) {
-        _mapController.move(
-          LatLng(position.latitude, position.longitude),
-          16,
-        );
+        _mapController.move(LatLng(position.lat, position.lng), 16);
       }
     });
 
@@ -116,6 +113,30 @@ class _MapScreenState extends ConsumerState<MapScreen> {
                         'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
                     userAgentPackageName: 'com.example.test_app',
                   ),
+                  PolygonLayer(
+                    polygons: [
+                      for (final pin in locations)
+                        if (pin.boundary != null)
+                          Polygon(
+                            points: [
+                              for (final point in pin.boundary!)
+                                LatLng(point.lat, point.lng),
+                            ],
+                            color: AppColors.accent.withValues(
+                              alpha: pin.id == selectedId ? 0.35 : 0.18,
+                            ),
+                            borderColor: pin.id == selectedId
+                                ? AppColors.accent
+                                : AppColors.accentText,
+                            borderStrokeWidth: pin.id == selectedId ? 3 : 2,
+                            pattern: pin.boundaryIsPrecise
+                                ? const StrokePattern.solid()
+                                : StrokePattern.dashed(
+                                    segments: const [8.0, 6.0],
+                                  ),
+                          ),
+                    ],
+                  ),
                   MarkerLayer(
                     markers: [
                       for (final LocationPin pin in locations)
@@ -133,10 +154,7 @@ class _MapScreenState extends ConsumerState<MapScreen> {
                         ),
                       if (currentPosition != null)
                         Marker(
-                          point: LatLng(
-                            currentPosition.latitude,
-                            currentPosition.longitude,
-                          ),
+                          point: LatLng(currentPosition.lat, currentPosition.lng),
                           width: 48,
                           height: 48,
                           child: const CurrentLocationMarker(),

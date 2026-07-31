@@ -1,29 +1,18 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:test_app/core/utils/result.dart';
+import 'package:test_app/features/map/domain/geo_position.dart';
 import 'package:test_app/features/map/domain/geolocation_service.dart';
 import 'package:test_app/features/map/presentation/providers/current_location_provider.dart';
 
 class MockGeolocationService extends Mock implements GeolocationService {}
 
-Position _samplePosition() => Position(
-  latitude: 37.7749,
-  longitude: -122.4194,
-  timestamp: DateTime.fromMillisecondsSinceEpoch(0),
-  accuracy: 5,
-  altitude: 0,
-  altitudeAccuracy: 0,
-  heading: 0,
-  headingAccuracy: 0,
-  speed: 0,
-  speedAccuracy: 0,
-);
+const _samplePosition = GeoPosition(lat: 37.7749, lng: -122.4194);
 
 void main() {
   setUpAll(() {
-    registerFallbackValue(LocationPermission.denied);
+    registerFallbackValue(LocationPermissionStatus.denied);
   });
 
   late MockGeolocationService mockService;
@@ -56,10 +45,10 @@ void main() {
       ).thenAnswer((_) async => true);
       when(
         () => mockService.checkPermission(),
-      ).thenAnswer((_) async => LocationPermission.denied);
+      ).thenAnswer((_) async => LocationPermissionStatus.denied);
       when(
         () => mockService.requestPermission(),
-      ).thenAnswer((_) async => LocationPermission.denied);
+      ).thenAnswer((_) async => LocationPermissionStatus.denied);
 
       await container.read(currentLocationProvider.notifier).determine();
 
@@ -69,21 +58,20 @@ void main() {
   );
 
   test('permission granted resolves to a successful position', () async {
-    final position = _samplePosition();
     when(
       () => mockService.isLocationServiceEnabled(),
     ).thenAnswer((_) async => true);
     when(
       () => mockService.checkPermission(),
-    ).thenAnswer((_) async => LocationPermission.always);
+    ).thenAnswer((_) async => LocationPermissionStatus.granted);
     when(
       () => mockService.getCurrentPosition(),
-    ).thenAnswer((_) async => position);
+    ).thenAnswer((_) async => _samplePosition);
 
     await container.read(currentLocationProvider.notifier).determine();
 
     final state = container.read(currentLocationProvider);
-    expect(state.value?.valueOrNull, position);
+    expect(state.value?.valueOrNull, _samplePosition);
     verify(() => mockService.getCurrentPosition()).called(1);
   });
 
@@ -93,7 +81,7 @@ void main() {
     ).thenAnswer((_) async => true);
     when(
       () => mockService.checkPermission(),
-    ).thenAnswer((_) async => LocationPermission.always);
+    ).thenAnswer((_) async => LocationPermissionStatus.granted);
     when(() => mockService.getCurrentPosition()).thenThrow(Exception('boom'));
 
     await container.read(currentLocationProvider.notifier).determine();

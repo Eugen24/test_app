@@ -1,3 +1,5 @@
+import 'geo_point.dart';
+
 class LocationPin {
   const LocationPin({
     required this.id,
@@ -10,6 +12,8 @@ class LocationPin {
     this.totalSpots,
     this.availableSpots,
     this.pricePerHour,
+    this.boundary,
+    this.boundaryIsPrecise = false,
   });
 
   final String id;
@@ -24,6 +28,13 @@ class LocationPin {
   final int? totalSpots;
   final int? availableSpots;
   final double? pricePerHour;
+
+  /// The lot's footprint, null when unknown. Estimated/generated shapes
+  /// (the default) should leave [boundaryIsPrecise] false so the UI renders
+  /// them as a dashed, approximate outline; a real surveyed/backend polygon
+  /// should set it true to render as a solid, authoritative outline.
+  final List<GeoPoint>? boundary;
+  final bool boundaryIsPrecise;
 
   bool get isParkingSpot => totalSpots != null && availableSpots != null;
 }

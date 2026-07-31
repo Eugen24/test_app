@@ -15,4 +15,24 @@ void main() {
       reason: 'ids must be unique',
     );
   });
+
+  test('every parking pin has a generated, non-empty boundary', () async {
+    final repo = MockLocationRepository();
+    final result = await repo.getLocations();
+    final locations = result.valueOrNull!;
+
+    for (final pin in locations) {
+      expect(pin.boundary, isNotNull, reason: '${pin.id} missing boundary');
+      expect(
+        pin.boundary!.length,
+        greaterThanOrEqualTo(3),
+        reason: '${pin.id} boundary must form a shape',
+      );
+      expect(
+        pin.boundaryIsPrecise,
+        isFalse,
+        reason: 'generated demo boundaries are estimates, not surveyed data',
+      );
+    }
+  });
 }

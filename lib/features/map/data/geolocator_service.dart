@@ -1,20 +1,43 @@
-import 'package:geolocator/geolocator.dart';
+import 'package:geolocator/geolocator.dart' as geolocator;
+import '../domain/geo_position.dart';
 import '../domain/geolocation_service.dart';
 
-/// [GeolocationService] implementation that delegates straight to the
-/// `geolocator` plugin's static methods.
+/// [GeolocationService] implementation that delegates to the `geolocator`
+/// plugin and maps its types to the domain's own — the only file in this
+/// feature allowed to import `geolocator`.
 class GeolocatorService implements GeolocationService {
   @override
   Future<bool> isLocationServiceEnabled() =>
-      Geolocator.isLocationServiceEnabled();
+      geolocator.Geolocator.isLocationServiceEnabled();
 
   @override
-  Future<LocationPermission> checkPermission() => Geolocator.checkPermission();
+  Future<LocationPermissionStatus> checkPermission() async {
+    return _mapPermission(await geolocator.Geolocator.checkPermission());
+  }
 
   @override
-  Future<LocationPermission> requestPermission() =>
-      Geolocator.requestPermission();
+  Future<LocationPermissionStatus> requestPermission() async {
+    return _mapPermission(await geolocator.Geolocator.requestPermission());
+  }
 
   @override
-  Future<Position> getCurrentPosition() => Geolocator.getCurrentPosition();
+  Future<GeoPosition> getCurrentPosition() async {
+    final position = await geolocator.Geolocator.getCurrentPosition();
+    return GeoPosition(lat: position.latitude, lng: position.longitude);
+  }
+
+  LocationPermissionStatus _mapPermission(
+    geolocator.LocationPermission permission,
+  ) {
+    return switch (permission) {
+      geolocator.LocationPermission.always ||
+      geolocator.LocationPermission.whileInUse =>
+        LocationPermissionStatus.granted,
+      geolocator.LocationPermission.deniedForever =>
+        LocationPermissionStatus.deniedForever,
+      geolocator.LocationPermission.denied ||
+      geolocator.LocationPermission.unableToDetermine =>
+        LocationPermissionStatus.denied,
+    };
+  }
 }
