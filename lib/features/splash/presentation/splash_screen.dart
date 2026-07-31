@@ -34,10 +34,18 @@ class _SplashScreenState extends State<SplashScreen> {
                 color: AppColors.accent,
                 borderRadius: BorderRadius.circular(24),
                 boxShadow: const [
-                  BoxShadow(color: AppColors.shadow, blurRadius: 20, offset: Offset(0, 10)),
+                  BoxShadow(
+                    color: AppColors.shadow,
+                    blurRadius: 20,
+                    offset: Offset(0, 10),
+                  ),
                 ],
               ),
-              child: const Icon(Icons.place_rounded, size: 44, color: AppColors.accentText),
+              child: const Icon(
+                Icons.place_rounded,
+                size: 44,
+                color: AppColors.accentText,
+              ),
             ),
             const SizedBox(height: 20),
             Text('Parqie', style: AppTextStyles.headline),

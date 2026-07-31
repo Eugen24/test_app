@@ -5,7 +5,8 @@ import '../../domain/user_profile.dart';
 
 final profileRepositoryProvider = Provider((ref) => MockProfileRepository());
 
-final profileProvider =
-    FutureProvider<Result<UserProfile, AppError>>((ref) async {
+final profileProvider = FutureProvider<Result<UserProfile, AppError>>((
+  ref,
+) async {
   return ref.watch(profileRepositoryProvider).getProfile();
 });

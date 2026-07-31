@@ -18,7 +18,11 @@ class MarkerIcon extends StatelessWidget {
           shape: BoxShape.circle,
           border: Border.all(color: AppColors.surface, width: 2),
           boxShadow: const [
-            BoxShadow(color: AppColors.shadow, blurRadius: 6, offset: Offset(0, 3)),
+            BoxShadow(
+              color: AppColors.shadow,
+              blurRadius: 6,
+              offset: Offset(0, 3),
+            ),
           ],
         ),
         padding: const EdgeInsets.all(8),

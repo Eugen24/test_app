@@ -22,7 +22,8 @@ class ProfileScreen extends ConsumerWidget {
           child: Text(AppError.unknown.message, style: AppTextStyles.body),
         ),
         data: (result) => result.when(
-          failure: (error) => Center(child: Text(error.message, style: AppTextStyles.body)),
+          failure: (error) =>
+              Center(child: Text(error.message, style: AppTextStyles.body)),
           success: (profile) => ListView(
             padding: const EdgeInsets.symmetric(horizontal: 24),
             children: [
@@ -38,8 +39,10 @@ class ProfileScreen extends ConsumerWidget {
                   ),
                   const SizedBox(width: 16),
                   Expanded(
-                    child: Text('Hi, ${profile.name.split(' ').first}',
-                        style: AppTextStyles.headline.copyWith(fontSize: 28)),
+                    child: Text(
+                      'Hi, ${profile.name.split(' ').first}',
+                      style: AppTextStyles.headline.copyWith(fontSize: 28),
+                    ),
                   ),
                 ],
               ),

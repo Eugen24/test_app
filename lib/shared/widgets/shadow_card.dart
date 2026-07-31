@@ -24,7 +24,11 @@ class ShadowCard extends StatelessWidget {
         color: AppColors.surface,
         borderRadius: BorderRadius.circular(20),
         boxShadow: const [
-          BoxShadow(color: AppColors.shadow, blurRadius: 16, offset: Offset(0, 8)),
+          BoxShadow(
+            color: AppColors.shadow,
+            blurRadius: 16,
+            offset: Offset(0, 8),
+          ),
         ],
       ),
       child: child,

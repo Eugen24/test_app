@@ -14,7 +14,11 @@ class AppSearchBar extends StatelessWidget {
         color: AppColors.surface,
         borderRadius: BorderRadius.circular(16),
         boxShadow: const [
-          BoxShadow(color: AppColors.shadow, blurRadius: 10, offset: Offset(0, 4)),
+          BoxShadow(
+            color: AppColors.shadow,
+            blurRadius: 10,
+            offset: Offset(0, 4),
+          ),
         ],
       ),
       child: TextField(
@@ -23,7 +27,10 @@ class AppSearchBar extends StatelessWidget {
         decoration: InputDecoration(
           hintText: 'Search locations',
           hintStyle: AppTextStyles.caption,
-          prefixIcon: const Icon(Icons.search_rounded, color: AppColors.textSecondary),
+          prefixIcon: const Icon(
+            Icons.search_rounded,
+            color: AppColors.textSecondary,
+          ),
           border: InputBorder.none,
           contentPadding: const EdgeInsets.symmetric(vertical: 14),
         ),

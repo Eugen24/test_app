@@ -9,7 +9,10 @@ void main() {
     expect(result.isSuccess, isTrue);
     final locations = result.valueOrNull!;
     expect(locations.length, greaterThanOrEqualTo(5));
-    expect(locations.map((l) => l.id).toSet().length, locations.length,
-        reason: 'ids must be unique');
+    expect(
+      locations.map((l) => l.id).toSet().length,
+      locations.length,
+      reason: 'ids must be unique',
+    );
   });
 }

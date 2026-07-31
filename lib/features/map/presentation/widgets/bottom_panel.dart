@@ -25,7 +25,11 @@ class BottomPanel extends ConsumerWidget {
             color: AppColors.background,
             borderRadius: BorderRadius.vertical(top: Radius.circular(28)),
             boxShadow: [
-              BoxShadow(color: AppColors.shadow, blurRadius: 20, offset: Offset(0, -6)),
+              BoxShadow(
+                color: AppColors.shadow,
+                blurRadius: 20,
+                offset: Offset(0, -6),
+              ),
             ],
           ),
           child: ListView(
@@ -43,7 +47,10 @@ class BottomPanel extends ConsumerWidget {
                 ),
               ),
               const SizedBox(height: 16),
-              Text('Nearby', style: AppTextStyles.headline.copyWith(fontSize: 26)),
+              Text(
+                'Nearby',
+                style: AppTextStyles.headline.copyWith(fontSize: 26),
+              ),
               const SizedBox(height: 16),
               AppSearchBar(
                 onChanged: (value) =>
@@ -55,7 +62,10 @@ class BottomPanel extends ConsumerWidget {
               if (locations.isEmpty)
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 24),
-                  child: Text('No matching locations found.', style: AppTextStyles.caption),
+                  child: Text(
+                    'No matching locations found.',
+                    style: AppTextStyles.caption,
+                  ),
                 )
               else
                 SizedBox(
@@ -71,7 +81,10 @@ class BottomPanel extends ConsumerWidget {
                         selected: pin.id == selectedId,
                         rotationDegrees: index.isEven ? -1.5 : 1.5,
                         onTap: () =>
-                            ref.read(selectedLocationIdProvider.notifier).state = pin.id,
+                            ref
+                                    .read(selectedLocationIdProvider.notifier)
+                                    .state =
+                                pin.id,
                       );
                     },
                   ),

@@ -41,7 +41,11 @@ class LocationCard extends StatelessWidget {
                   ),
                 ),
                 if (selected)
-                  const Icon(Icons.check_circle_rounded, color: AppColors.accent, size: 18),
+                  const Icon(
+                    Icons.check_circle_rounded,
+                    color: AppColors.accent,
+                    size: 18,
+                  ),
               ],
             ),
             const SizedBox(height: 6),

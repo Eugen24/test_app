@@ -18,7 +18,8 @@ class CurrentLocationButton extends ConsumerWidget {
         PillButton(
           label: 'Use Current Location',
           icon: Icons.my_location_rounded,
-          onPressed: () => ref.read(currentLocationProvider.notifier).determine(),
+          onPressed: () =>
+              ref.read(currentLocationProvider.notifier).determine(),
         ),
         state.when(
           data: (result) => result.when(

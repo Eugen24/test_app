@@ -7,14 +7,14 @@ sealed class Result<T, E> {
   bool get isSuccess => this is Success<T, E>;
 
   T? get valueOrNull => switch (this) {
-        Success<T, E>(value: final v) => v,
-        Failure<T, E>() => null,
-      };
+    Success<T, E>(value: final v) => v,
+    Failure<T, E>() => null,
+  };
 
   E? get errorOrNull => switch (this) {
-        Success<T, E>() => null,
-        Failure<T, E>(error: final e) => e,
-      };
+    Success<T, E>() => null,
+    Failure<T, E>(error: final e) => e,
+  };
 
   R when<R>({
     required R Function(T value) success,
@@ -47,13 +47,13 @@ enum AppError {
 
 extension AppErrorMessage on AppError {
   String get message => switch (this) {
-        AppError.locationPermissionDenied =>
-          'Location permission was denied. Enable it in Settings to use your current location.',
-        AppError.locationServiceDisabled =>
-          'Location services are turned off. Enable them to use your current location.',
-        AppError.locationUnavailable =>
-          'We couldn\'t determine your current location. Try again.',
-        AppError.notFound => 'No matching locations found.',
-        AppError.unknown => 'Something went wrong. Please try again.',
-      };
+    AppError.locationPermissionDenied =>
+      'Location permission was denied. Enable it in Settings to use your current location.',
+    AppError.locationServiceDisabled =>
+      'Location services are turned off. Enable them to use your current location.',
+    AppError.locationUnavailable =>
+      'We couldn\'t determine your current location. Try again.',
+    AppError.notFound => 'No matching locations found.',
+    AppError.unknown => 'Something went wrong. Please try again.',
+  };
 }

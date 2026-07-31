@@ -43,7 +43,10 @@ class MapScreen extends ConsumerWidget {
                       height: 44,
                       child: GestureDetector(
                         onTap: () =>
-                            ref.read(selectedLocationIdProvider.notifier).state = pin.id,
+                            ref
+                                    .read(selectedLocationIdProvider.notifier)
+                                    .state =
+                                pin.id,
                         child: MarkerIcon(selected: pin.id == selectedId),
                       ),
                     ),
@@ -56,10 +59,7 @@ class MapScreen extends ConsumerWidget {
             right: 16,
             child: _ProfileButton(),
           ),
-          const Align(
-            alignment: Alignment.bottomCenter,
-            child: BottomPanel(),
-          ),
+          const Align(alignment: Alignment.bottomCenter, child: BottomPanel()),
         ],
       ),
     );

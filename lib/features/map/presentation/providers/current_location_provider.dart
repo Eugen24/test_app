@@ -43,21 +43,24 @@ class CurrentLocationController
 
 class _IdlePosition extends Position {
   _IdlePosition()
-      : super(
-          latitude: 0,
-          longitude: 0,
-          timestamp: DateTime.fromMillisecondsSinceEpoch(0),
-          accuracy: 0,
-          altitude: 0,
-          altitudeAccuracy: 0,
-          heading: 0,
-          headingAccuracy: 0,
-          speed: 0,
-          speedAccuracy: 0,
-        );
+    : super(
+        latitude: 0,
+        longitude: 0,
+        timestamp: DateTime.fromMillisecondsSinceEpoch(0),
+        accuracy: 0,
+        altitude: 0,
+        altitudeAccuracy: 0,
+        heading: 0,
+        headingAccuracy: 0,
+        speed: 0,
+        speedAccuracy: 0,
+      );
 }
 
-final currentLocationProvider = StateNotifierProvider<CurrentLocationController,
-    AsyncValue<Result<Position, AppError>>>((ref) {
-  return CurrentLocationController();
-});
+final currentLocationProvider =
+    StateNotifierProvider<
+      CurrentLocationController,
+      AsyncValue<Result<Position, AppError>>
+    >((ref) {
+      return CurrentLocationController();
+    });

@@ -8,8 +8,9 @@ final locationRepositoryProvider = Provider<LocationRepository>((ref) {
   return MockLocationRepository();
 });
 
-final locationsProvider =
-    FutureProvider<Result<List<LocationPin>, AppError>>((ref) async {
+final locationsProvider = FutureProvider<Result<List<LocationPin>, AppError>>((
+  ref,
+) async {
   final repo = ref.watch(locationRepositoryProvider);
   return repo.getLocations();
 });

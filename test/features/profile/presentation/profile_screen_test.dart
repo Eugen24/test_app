@@ -4,8 +4,9 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:test_app/features/profile/presentation/profile_screen.dart';
 
 void main() {
-  testWidgets('ProfileScreen renders greeting and stat cards from mock data',
-      (tester) async {
+  testWidgets('ProfileScreen renders greeting and stat cards from mock data', (
+    tester,
+  ) async {
     await tester.pumpWidget(
       const ProviderScope(child: MaterialApp(home: ProfileScreen())),
     );

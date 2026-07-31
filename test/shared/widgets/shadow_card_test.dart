@@ -3,7 +3,9 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:test_app/shared/widgets/shadow_card.dart';
 
 void main() {
-  testWidgets('ShadowCard renders its child and responds to tap', (tester) async {
+  testWidgets('ShadowCard renders its child and responds to tap', (
+    tester,
+  ) async {
     var tapped = false;
     await tester.pumpWidget(
       MaterialApp(

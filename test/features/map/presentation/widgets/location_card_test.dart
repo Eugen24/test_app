@@ -4,7 +4,9 @@ import 'package:test_app/features/map/domain/location_pin.dart';
 import 'package:test_app/features/map/presentation/widgets/location_card.dart';
 
 void main() {
-  testWidgets('LocationCard shows name, description, and reports taps', (tester) async {
+  testWidgets('LocationCard shows name, description, and reports taps', (
+    tester,
+  ) async {
     const pin = LocationPin(
       id: 'loc-1',
       name: 'Riverside Park',
@@ -18,7 +20,11 @@ void main() {
     await tester.pumpWidget(
       MaterialApp(
         home: Scaffold(
-          body: LocationCard(pin: pin, selected: false, onTap: () => tapped = true),
+          body: LocationCard(
+            pin: pin,
+            selected: false,
+            onTap: () => tapped = true,
+          ),
         ),
       ),
     );
