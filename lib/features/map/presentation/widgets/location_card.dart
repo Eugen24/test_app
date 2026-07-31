@@ -3,6 +3,7 @@ import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../shared/widgets/shadow_card.dart';
 import '../../domain/location_pin.dart';
+import 'parking_availability_grid.dart';
 
 class LocationCard extends StatelessWidget {
   const LocationCard({
@@ -25,7 +26,7 @@ class LocationCard extends StatelessWidget {
       rotationDegrees: rotationDegrees,
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
       child: SizedBox(
-        width: 220,
+        width: 240,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
@@ -55,6 +56,37 @@ class LocationCard extends StatelessWidget {
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
             ),
+            if (pin.isParkingSpot) ...[
+              const SizedBox(height: 10),
+              ParkingAvailabilityGrid(
+                totalSpots: pin.totalSpots!,
+                availableSpots: pin.availableSpots!,
+              ),
+              const SizedBox(height: 6),
+              Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      '${pin.availableSpots}/${pin.totalSpots} spots',
+                      style: AppTextStyles.caption.copyWith(
+                        fontWeight: FontWeight.w600,
+                        color: pin.availableSpots == 0
+                            ? AppColors.error
+                            : AppColors.textPrimary,
+                      ),
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                  if (pin.pricePerHour != null)
+                    Text(
+                      '${pin.pricePerHour!.toStringAsFixed(0)} MDL/h',
+                      style: AppTextStyles.caption.copyWith(
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                ],
+              ),
+            ],
           ],
         ),
       ),

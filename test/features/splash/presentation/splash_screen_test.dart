@@ -6,15 +6,15 @@ import 'package:test_app/features/splash/presentation/splash_screen.dart';
 
 void main() {
   testWidgets(
-    'SplashScreen shows the wordmark and navigates to /map after delay',
+    'SplashScreen shows the wordmark and navigates to /onboarding after delay',
     (tester) async {
       final router = GoRouter(
         initialLocation: '/',
         routes: [
           GoRoute(path: '/', builder: (_, __) => const SplashScreen()),
           GoRoute(
-            path: '/map',
-            builder: (_, __) => const Scaffold(body: Text('Map')),
+            path: '/onboarding',
+            builder: (_, __) => const Scaffold(body: Text('Onboarding')),
           ),
         ],
       );
@@ -28,7 +28,7 @@ void main() {
       await tester.pump(const Duration(milliseconds: 2500));
       await tester.pumpAndSettle();
 
-      expect(find.text('Map'), findsOneWidget);
+      expect(find.text('Onboarding'), findsOneWidget);
     },
   );
 }

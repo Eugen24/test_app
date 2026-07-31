@@ -23,11 +23,11 @@ void main() {
       addTearDown(container.dispose);
 
       await container.read(locationsProvider.future);
-      container.read(searchQueryProvider.notifier).state = 'coffee';
+      container.read(searchQueryProvider.notifier).state = 'codru';
       final filtered = container.read(filteredLocationsProvider);
 
       expect(filtered.length, 1);
-      expect(filtered.first.name, 'Downtown Coffee Co.');
+      expect(filtered.first.name, 'Hotel Codru Guest Parking');
     },
   );
 

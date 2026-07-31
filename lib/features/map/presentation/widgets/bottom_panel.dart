@@ -51,7 +51,7 @@ class BottomPanel extends ConsumerWidget {
               ),
               const SizedBox(height: 16),
               Text(
-                'Nearby',
+                'Nearby Parking',
                 style: AppTextStyles.headline.copyWith(fontSize: 26),
               ),
               const SizedBox(height: 16),
@@ -128,7 +128,7 @@ class _LocationsSection extends StatelessWidget {
     }
 
     return SizedBox(
-      height: 150,
+      height: 190,
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
         itemCount: locations.length,

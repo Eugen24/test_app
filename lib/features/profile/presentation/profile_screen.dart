@@ -52,7 +52,7 @@ class ProfileScreen extends ConsumerWidget {
                   Expanded(
                     child: StatCard(
                       value: '${profile.visitedCount}',
-                      label: 'locations visited',
+                      label: 'spots reserved',
                       rotationDegrees: -2,
                     ),
                   ),
@@ -60,7 +60,7 @@ class ProfileScreen extends ConsumerWidget {
                   Expanded(
                     child: StatCard(
                       value: profile.favoriteSpot,
-                      label: 'favorite spot',
+                      label: 'favorite lot',
                       rotationDegrees: 2,
                     ),
                   ),

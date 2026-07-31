@@ -25,7 +25,7 @@ class AppSearchBar extends StatelessWidget {
         onChanged: onChanged,
         style: AppTextStyles.body,
         decoration: InputDecoration(
-          hintText: 'Search locations',
+          hintText: 'Search parking spots',
           hintStyle: AppTextStyles.caption,
           prefixIcon: const Icon(
             Icons.search_rounded,

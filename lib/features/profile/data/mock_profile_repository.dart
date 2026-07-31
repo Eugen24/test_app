@@ -11,7 +11,7 @@ class MockProfileRepository implements ProfileRepository {
         name: 'Alex Rivera',
         avatarInitial: 'A',
         visitedCount: 12,
-        favoriteSpot: 'Riverside Park',
+        favoriteSpot: 'Hotel Codru Guest Parking',
       ),
     );
   }

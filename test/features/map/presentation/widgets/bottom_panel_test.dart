@@ -45,14 +45,14 @@ void main() {
     await tester.pump(const Duration(milliseconds: 200));
     await tester.pumpAndSettle();
 
-    expect(find.text('Riverside Park'), findsOneWidget);
-    expect(find.text('Downtown Coffee Co.'), findsOneWidget);
+    expect(find.text('Nobil Tower Office Parking'), findsOneWidget);
+    expect(find.text('Hotel Codru Guest Parking'), findsOneWidget);
 
-    await tester.enterText(find.byType(TextField), 'coffee');
+    await tester.enterText(find.byType(TextField), 'codru');
     await tester.pumpAndSettle();
 
-    expect(find.text('Downtown Coffee Co.'), findsOneWidget);
-    expect(find.text('Riverside Park'), findsNothing);
+    expect(find.text('Hotel Codru Guest Parking'), findsOneWidget);
+    expect(find.text('Nobil Tower Office Parking'), findsNothing);
   });
 
   testWidgets('BottomPanel shows a loading indicator while resolving', (

@@ -15,7 +15,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     Future.delayed(const Duration(milliseconds: 2500), () {
-      if (mounted) context.go('/map');
+      if (mounted) context.go('/onboarding');
     });
   }
 
@@ -28,10 +28,9 @@ class _SplashScreenState extends State<SplashScreen> {
           mainAxisSize: MainAxisSize.min,
           children: [
             Container(
-              width: 88,
-              height: 88,
+              width: 96,
+              height: 96,
               decoration: BoxDecoration(
-                color: AppColors.accent,
                 borderRadius: BorderRadius.circular(24),
                 boxShadow: const [
                   BoxShadow(
@@ -41,14 +40,23 @@ class _SplashScreenState extends State<SplashScreen> {
                   ),
                 ],
               ),
-              child: const Icon(
-                Icons.place_rounded,
-                size: 44,
-                color: AppColors.accentText,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(24),
+                child: Image.asset(
+                  'assets/images/parqie_logo.jpeg',
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
             const SizedBox(height: 20),
             Text('Parqie', style: AppTextStyles.headline),
+            const SizedBox(height: 8),
+            Text(
+              'Guaranteed parking, Chișinău',
+              style: AppTextStyles.body.copyWith(
+                color: AppColors.textSecondary,
+              ),
+            ),
           ],
         ),
       ),

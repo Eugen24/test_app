@@ -8,7 +8,7 @@ void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
   testWidgets(
-    'golden path: splash -> map -> select marker -> profile -> back',
+    'golden path: splash -> onboarding -> map -> select marker -> profile -> back',
     (tester) async {
       await tester.pumpWidget(const ProviderScope(child: MyApp()));
 
@@ -17,10 +17,14 @@ void main() {
       await tester.pump(const Duration(milliseconds: 2600));
       await tester.pumpAndSettle();
 
-      expect(find.text('Nearby'), findsOneWidget);
-      expect(find.text('Riverside Park'), findsOneWidget);
+      expect(find.text('Skip'), findsOneWidget);
+      await tester.tap(find.text('Skip'));
+      await tester.pumpAndSettle();
 
-      await tester.tap(find.text('Riverside Park'));
+      expect(find.text('Nearby Parking'), findsOneWidget);
+      expect(find.text('Nobil Tower Office Parking'), findsOneWidget);
+
+      await tester.tap(find.text('Nobil Tower Office Parking'));
       await tester.pumpAndSettle();
       expect(find.byIcon(Icons.check_circle_rounded), findsOneWidget);
 
@@ -30,7 +34,7 @@ void main() {
 
       await tester.pageBack();
       await tester.pumpAndSettle();
-      expect(find.text('Nearby'), findsOneWidget);
+      expect(find.text('Nearby Parking'), findsOneWidget);
     },
   );
 }

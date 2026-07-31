@@ -14,7 +14,7 @@ import 'widgets/marker_icon.dart';
 class MapScreen extends ConsumerStatefulWidget {
   const MapScreen({super.key});
 
-  static const _initialCenter = LatLng(37.7768, -122.4210);
+  static const _initialCenter = LatLng(47.0105, 28.8638); // Chișinău
 
   @override
   ConsumerState<MapScreen> createState() => _MapScreenState();
@@ -74,7 +74,7 @@ class _MapScreenState extends ConsumerState<MapScreen> {
                                     .read(selectedLocationIdProvider.notifier)
                                     .state =
                                 pin.id,
-                        child: MarkerIcon(selected: pin.id == selectedId),
+                        child: MarkerIcon(pin: pin, selected: pin.id == selectedId),
                       ),
                     ),
                   if (currentPosition != null)

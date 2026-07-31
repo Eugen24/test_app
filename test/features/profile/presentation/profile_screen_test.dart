@@ -13,6 +13,6 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.textContaining('Alex'), findsOneWidget);
-    expect(find.textContaining('locations'), findsWidgets);
+    expect(find.textContaining('spots'), findsWidgets);
   });
 }
