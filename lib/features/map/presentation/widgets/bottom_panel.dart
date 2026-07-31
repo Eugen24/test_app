@@ -7,6 +7,7 @@ import '../../domain/location_pin.dart';
 import '../providers/location_providers.dart';
 import 'current_location_button.dart';
 import 'location_card.dart';
+import 'parking_detail_sheet.dart';
 import 'search_bar.dart';
 
 class BottomPanel extends ConsumerWidget {
@@ -139,7 +140,10 @@ class _LocationsSection extends StatelessWidget {
             pin: pin,
             selected: pin.id == selectedId,
             rotationDegrees: index.isEven ? -1.5 : 1.5,
-            onTap: () => onSelect(pin.id),
+            onTap: () {
+              onSelect(pin.id);
+              if (pin.isParkingSpot) ParkingDetailSheet.show(context, pin);
+            },
           );
         },
       ),

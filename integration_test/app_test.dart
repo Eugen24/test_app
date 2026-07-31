@@ -24,7 +24,13 @@ void main() {
       expect(find.text('Nearby Parking'), findsOneWidget);
       expect(find.text('Nobil Tower Office Parking'), findsOneWidget);
 
-      await tester.tap(find.text('Nobil Tower Office Parking'));
+      await tester.tap(find.text('Nobil Tower Office Parking').first);
+      await tester.pumpAndSettle();
+      expect(find.text('Reserve Spot'), findsOneWidget);
+
+      // Dismiss the detail sheet by tapping the scrim, then confirm the
+      // card behind it is now marked selected.
+      await tester.tapAt(const Offset(20, 20));
       await tester.pumpAndSettle();
       expect(find.byIcon(Icons.check_circle_rounded), findsOneWidget);
 
