@@ -11,24 +11,47 @@ import 'widgets/bottom_panel.dart';
 import 'widgets/current_location_marker.dart';
 import 'widgets/marker_icon.dart';
 
-class MapScreen extends ConsumerWidget {
+class MapScreen extends ConsumerStatefulWidget {
   const MapScreen({super.key});
 
   static const _initialCenter = LatLng(37.7768, -122.4210);
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<MapScreen> createState() => _MapScreenState();
+}
+
+class _MapScreenState extends ConsumerState<MapScreen> {
+  final _mapController = MapController();
+
+  @override
+  void dispose() {
+    _mapController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final locations = ref.watch(filteredLocationsProvider);
     final selectedId = ref.watch(selectedLocationIdProvider);
     final currentLocationState = ref.watch(currentLocationProvider);
     final currentPosition = currentLocationState.asData?.value?.valueOrNull;
 
+    ref.listen<String?>(selectedLocationIdProvider, (previous, next) {
+      if (next == null) return;
+      final pins = ref.read(filteredLocationsProvider);
+      final match = pins.where((pin) => pin.id == next);
+      if (match.isEmpty) return;
+      final pin = match.first;
+      _mapController.move(LatLng(pin.lat, pin.lng), 15);
+    });
+
     return Scaffold(
       body: Stack(
         children: [
           FlutterMap(
+            mapController: _mapController,
             options: const MapOptions(
-              initialCenter: _initialCenter,
+              initialCenter: MapScreen._initialCenter,
               initialZoom: 14,
               minZoom: 3,
               maxZoom: 18,
