@@ -1,25 +1,58 @@
+import 'dart:math' as math;
 import '../../../core/utils/result.dart';
 import '../domain/geo_point.dart';
 import '../domain/location_pin.dart';
 import '../domain/location_repository.dart';
 
 class MockLocationRepository implements LocationRepository {
-  /// Generates a rectangular footprint around a lot's center, sized
-  /// proportionally to its capacity so bigger lots visibly look bigger on
-  /// the map. This is a stand-in for real survey/backend polygon geometry —
-  /// pins built with it leave [LocationPin.boundaryIsPrecise] at its default
-  /// `false`, so the outline renders as dashed/estimated rather than solid.
-  static List<GeoPoint> _generateBoundary(double lat, double lng, int totalSpots) {
-    // ~0.00015deg ≈ 12-17m at this latitude; scale up slightly per spot,
-    // capped so very large lots don't sprawl into neighboring streets.
-    final halfWidth = (0.00015 + totalSpots * 0.0000035).clamp(0.00015, 0.00045);
-    final halfHeight = halfWidth * 0.7;
-    return [
-      GeoPoint(lat - halfHeight, lng - halfWidth),
-      GeoPoint(lat - halfHeight, lng + halfWidth),
-      GeoPoint(lat + halfHeight, lng + halfWidth),
-      GeoPoint(lat + halfHeight, lng - halfWidth),
-    ];
+  /// FNV-1a over [id] so the boundary shape is stable across app runs and
+  /// devices (unlike `String.hashCode`, which the language spec does not
+  /// guarantee to be stable) while still being deterministic per pin.
+  static int _stableSeed(String id) {
+    var hash = 0x811c9dc5;
+    for (final unit in id.codeUnits) {
+      hash ^= unit;
+      hash = (hash * 0x01000193) & 0xFFFFFFFF;
+    }
+    return hash;
+  }
+
+  /// Generates an irregular polygon footprint around a lot's center —
+  /// deterministic per [id], sized proportionally to [totalSpots] so bigger
+  /// lots visibly look bigger, and jittered in both angle and radius so it
+  /// reads as a traced-out lot rather than a generic rectangle. This is a
+  /// stand-in for real survey/backend polygon geometry — pins built with it
+  /// leave [LocationPin.boundaryIsPrecise] at its default `false`, so the
+  /// outline renders as dashed/estimated rather than solid.
+  static List<GeoPoint> _generateBoundary(
+    String id,
+    double lat,
+    double lng,
+    int totalSpots,
+  ) {
+    final random = math.Random(_stableSeed(id));
+
+    // ~0.00012deg ≈ 9-13m at this latitude; scale up per spot, capped so
+    // very large lots don't sprawl into neighboring streets.
+    final baseRadius = (0.00012 + totalSpots * 0.0000032).clamp(
+      0.00012,
+      0.00035,
+    );
+    final latRad = lat * math.pi / 180;
+    final lngCorrection = math.cos(latRad).abs().clamp(0.3, 1.0);
+
+    const vertexCount = 6;
+    return List.generate(vertexCount, (i) {
+      final baseAngle = 2 * math.pi * i / vertexCount;
+      final angleJitter = (random.nextDouble() - 0.5) * (math.pi / vertexCount);
+      final radiusJitter = 0.6 + random.nextDouble() * 0.6; // 0.6x-1.2x
+      final r = baseRadius * radiusJitter;
+      final angle = baseAngle + angleJitter;
+      return GeoPoint(
+        lat + r * math.sin(angle),
+        lng + (r * math.cos(angle)) / lngCorrection,
+      );
+    });
   }
 
   static LocationPin _pin({
@@ -45,7 +78,7 @@ class MockLocationRepository implements LocationRepository {
       totalSpots: totalSpots,
       availableSpots: availableSpots,
       pricePerHour: pricePerHour,
-      boundary: _generateBoundary(lat, lng, totalSpots),
+      boundary: _generateBoundary(id, lat, lng, totalSpots),
     );
   }
 

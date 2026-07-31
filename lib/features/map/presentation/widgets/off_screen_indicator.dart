@@ -5,7 +5,10 @@ import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../domain/location_pin.dart';
 
-const _distance = Distance();
+// `roundResult: false` is required — the default rounds `.as()` to the
+// nearest whole unit (e.g. every distance under 1.5km reads as "1 km"),
+// which made every off-screen arrow show near-identical distances.
+const _distance = Distance(roundResult: false);
 
 /// Game-style "radar" arrow: for a [pin] currently outside the map's visible
 /// bounds, points from the edge of [canvasSize] toward the pin's real-world
