@@ -22,16 +22,21 @@ class CurrentLocationButton extends ConsumerWidget {
               ref.read(currentLocationProvider.notifier).determine(),
         ),
         state.when(
-          data: (result) => result.when(
-            success: (_) => const SizedBox.shrink(),
-            failure: (error) => Padding(
-              padding: const EdgeInsets.only(top: 8, left: 4),
-              child: Text(
-                error.message,
-                style: const TextStyle(color: AppColors.error, fontSize: 12),
-              ),
-            ),
-          ),
+          data: (result) => result == null
+              ? const SizedBox.shrink()
+              : result.when(
+                  success: (_) => const SizedBox.shrink(),
+                  failure: (error) => Padding(
+                    padding: const EdgeInsets.only(top: 8, left: 4),
+                    child: Text(
+                      error.message,
+                      style: const TextStyle(
+                        color: AppColors.error,
+                        fontSize: 12,
+                      ),
+                    ),
+                  ),
+                ),
           loading: () => const Padding(
             padding: EdgeInsets.only(top: 8, left: 4),
             child: SizedBox(

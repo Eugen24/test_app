@@ -5,8 +5,10 @@ import 'package:go_router/go_router.dart';
 import 'package:latlong2/latlong.dart';
 import '../../../core/theme/app_colors.dart';
 import '../domain/location_pin.dart';
+import 'providers/current_location_provider.dart';
 import 'providers/location_providers.dart';
 import 'widgets/bottom_panel.dart';
+import 'widgets/current_location_marker.dart';
 import 'widgets/marker_icon.dart';
 
 class MapScreen extends ConsumerWidget {
@@ -18,6 +20,8 @@ class MapScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final locations = ref.watch(filteredLocationsProvider);
     final selectedId = ref.watch(selectedLocationIdProvider);
+    final currentLocationState = ref.watch(currentLocationProvider);
+    final currentPosition = currentLocationState.asData?.value?.valueOrNull;
 
     return Scaffold(
       body: Stack(
@@ -49,6 +53,16 @@ class MapScreen extends ConsumerWidget {
                                 pin.id,
                         child: MarkerIcon(selected: pin.id == selectedId),
                       ),
+                    ),
+                  if (currentPosition != null)
+                    Marker(
+                      point: LatLng(
+                        currentPosition.latitude,
+                        currentPosition.longitude,
+                      ),
+                      width: 24,
+                      height: 24,
+                      child: const CurrentLocationMarker(),
                     ),
                 ],
               ),

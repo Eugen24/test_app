@@ -3,10 +3,8 @@ import 'package:geolocator/geolocator.dart';
 import '../../../../core/utils/result.dart';
 
 class CurrentLocationController
-    extends StateNotifier<AsyncValue<Result<Position, AppError>>> {
-  CurrentLocationController() : super(AsyncValue.data(Success(_idle)));
-
-  static final _idle = _IdlePosition();
+    extends StateNotifier<AsyncValue<Result<Position, AppError>?>> {
+  CurrentLocationController() : super(const AsyncValue.data(null));
 
   Future<void> determine() async {
     state = const AsyncValue.loading();
@@ -41,26 +39,10 @@ class CurrentLocationController
   }
 }
 
-class _IdlePosition extends Position {
-  _IdlePosition()
-    : super(
-        latitude: 0,
-        longitude: 0,
-        timestamp: DateTime.fromMillisecondsSinceEpoch(0),
-        accuracy: 0,
-        altitude: 0,
-        altitudeAccuracy: 0,
-        heading: 0,
-        headingAccuracy: 0,
-        speed: 0,
-        speedAccuracy: 0,
-      );
-}
-
 final currentLocationProvider =
     StateNotifierProvider<
       CurrentLocationController,
-      AsyncValue<Result<Position, AppError>>
+      AsyncValue<Result<Position, AppError>?>
     >((ref) {
       return CurrentLocationController();
     });

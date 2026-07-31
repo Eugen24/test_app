@@ -11,4 +11,7 @@ abstract final class AppColors {
   static const accentText = Color(0xFF14140F);
   static const error = Color(0xFFC0392B);
   static const shadow = Color(0x1A000000);
+  // Distinct blue used only for the user's current-location marker, kept
+  // visually separate from the yellow accent used for location pins.
+  static const userLocation = Color(0xFF4285F4);
 }
