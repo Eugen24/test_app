@@ -1,4 +1,3 @@
-# Parqie
 
 A Flutter app simulating a simple location-based service: splash screen, interactive
 map with mocked location pins, and a bottom panel for search / current-location /
